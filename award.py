@@ -1,3 +1,14 @@
+#!/usr/bin/python
+#-*- coding:UTF-8 -*-
+#-----------------------------------------------------------------------#
+# File Name: awardpy
+# Author: Junyi Li
+# Personal Page: DukeEnglish.github.io
+# Mail: 4ljy@163.com
+# Created Time: 2019-05-05
+# Description:
+#-----------------------------------------------------------------------#
+
 import sys
 import random
 import json
@@ -20,7 +31,7 @@ def extra_daily_award():
 	n = random.randint(1,20)
 	print("random_sm_prob_num", n)
 	if n == 10:
-		extra_award = random.randint(1, (100 if EXTRA_DAILY_AWARD >= 100 else EXTRA_DAILY_AWARD))
+		extra_award = random.randint(MINUS_DAILY_AWARD, (100 if EXTRA_DAILY_AWARD >= 100 else EXTRA_DAILY_AWARD))
 		print("TODAY'S EXTRA_DAILY_AWARD:", extra_award)
 		return extra_award
 	else:
@@ -52,7 +63,7 @@ def init_log():
 	json_line["daily_award"] = 0
 	json_line["weekly_award"] = 0
 	json_line["monthly_award"] = 0
-	json_line["total_month"] = 2600
+	json_line["total_month"] = TOTAL_MONTH
 	print("init log done")
 	json_log = json.dumps(json_line)
 	fr = open("log.txt", "w")
@@ -91,6 +102,7 @@ def main():
 		print("You are awarded because of 400 daily_task completed", ma)
 		total_w_award = 0
 		total_m_award += 1
+		json_line["total_month"] += TOTAL_MONTH
 	if total_m_award >=4:
 		print("You are awarded because you have insisted on this for 4 months, program it right now please")
 
@@ -103,6 +115,7 @@ def main():
 	fr.write(json_log)
 	total_award = today_daily_award+ wa + ma
 	print("today total award", total_award)
+	json_line["total_month"] = json_line["total_month"] - total_award
 
 if __name__ == '__main__':
 	if sys.argv[1]=="init":
