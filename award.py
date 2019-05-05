@@ -24,7 +24,27 @@ WEEKLY = 50 # >=100 weekly
 
 MONTH_AWARD = 1000 # >= 400 monthly
 EXTRA_AWARD_MONTH = 0
+
+WORK_OUT = 20
+COURSERA = 30
+# 总额为600 + 额外的 1k奖励 + 月1k奖励 + 周400奖励 = 3k
+# 需要添加的是锻炼，看coursera的课程的奖励，完成工作的奖励。思考：这些是否需要添加，毕竟我目前要规范的是平时的SM。
+# 其实现在总额并不确定，，，先看看情况吧
 TOTAL_MONTH = 2600
+
+def excise_award():
+	ea = extra_daily_award()
+	print("extra_daily_award", ea)
+	print("d_award", WORK_OUT) 
+	res = WORK_OUT+ea
+	return res
+
+def coursera_award():
+	ea = extra_daily_award()
+	print("extra_daily_award", ea)
+	print("d_award", COURSERA) 
+	res = COURSERA+ea
+	return res
 
 
 def extra_daily_award():
@@ -38,21 +58,22 @@ def extra_daily_award():
 		return 0
 
 def weekly_award():
-	prob = random.random()
-	return (20+prob*WEEKLY)
+	prob = random.random()*0.8
+	return ((prob+0.2)*WEEKLY)
 
 def monthly_award():
-	prob = random.random()
-	return (100+prob*MONTH_AWARD)
+	prob = random.random()*0.9
+	return ((prob+0.1)*MONTH_AWARD)
 
 
 def daily_award(daily_task):
 	
 	
 	d_award = daily_task*DAILY_AWARD/10
-	print("extra_daily_award", extra_daily_award())
+	ea = extra_daily_award()
+	print("extra_daily_award", ea)
 	print("d_award", d_award) 
-	res = d_award+extra_daily_award()
+	res = d_award+ea
 	return res
 
 def init_log():
@@ -69,8 +90,30 @@ def init_log():
 	fr = open("log.txt", "w")
 	fr.write(json_log)
 
+def log_excise():
+	fr = open("log.txt", "r")
+	log_line = fr.readline()
+	# print(log_line)
+	json_line = json.loads(log_line)
+	json_line["total_month"] += excise_award()
+	print("excise done")
+	json_log = json.dumps(json_line)
+	fr = open("log.txt", "w")
+	fr.write(json_log)
+	
+def log_coursera():
+	fr = open("log.txt", "r")
+	log_line = fr.readline()
+	# print(log_line)
+	json_line = json.loads(log_line)
+	json_line["total_month"] += coursera_award()
+	print("coursera done")
+	json_log = json.dumps(json_line)
+	fr = open("log.txt", "w")
+	fr.write(json_log)
 
 def main():
+
 	total_award = 0
 	wa = 0
 	ma = 0
@@ -82,6 +125,7 @@ def main():
 	total_d_award = json_line["daily_award"]
 	total_w_award = json_line["weekly_award"]
 	total_m_award = json_line["monthly_award"]
+
 	print("read log done")
 	print("total_d_award", total_d_award)
 	print("total_w_award", total_w_award)
@@ -120,5 +164,9 @@ def main():
 if __name__ == '__main__':
 	if sys.argv[1]=="init":
 		init_log()
+	elif sys.argv[1]=="e"
+		log_excise
+	elif sys.argv[1]=="c"
+		log_coursera
 	else:
 		main()
