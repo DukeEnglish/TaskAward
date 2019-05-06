@@ -85,6 +85,7 @@ def init_log():
 	json_line["weekly_award"] = 0
 	json_line["monthly_award"] = 0
 	json_line["total_month"] = TOTAL_MONTH
+	json_line["accumulation_month"] =0
 	print("init log done")
 	json_log = json.dumps(json_line)
 	fr = open("log.txt", "w")
@@ -95,7 +96,10 @@ def log_excise():
 	log_line = fr.readline()
 	# print(log_line)
 	json_line = json.loads(log_line)
-	json_line["total_month"] -= excise_award()
+	ea = excise_award()
+	json_line["total_month"] -= ea
+	json_line["accumulation_month"] += ea
+	print("you have earned:" ,json_line["accumulation_month"])
 	print("excise done")
 	json_log = json.dumps(json_line)
 	fr = open("log.txt", "w")
@@ -106,7 +110,10 @@ def log_coursera():
 	log_line = fr.readline()
 	# print(log_line)
 	json_line = json.loads(log_line)
-	json_line["total_month"] -= coursera_award()
+	ca = coursera_award()
+	json_line["total_month"] -= ca
+	json_line["accumulation_month"] += ea
+	print("you have earned:" ,json_line["accumulation_month"])
 	print("coursera done")
 	json_log = json.dumps(json_line)
 	fr = open("log.txt", "w")
@@ -155,12 +162,14 @@ def main():
 	json_line["daily_award"] = total_d_award
 	json_line["weekly_award"] = total_w_award
 	json_line["monthly_award"] = total_m_award
-        tmp = json_line["total_month"] - total_award
+	tmp = json_line["total_month"] - total_award
+	json_line["accumulation_month"] += total_award
 	json_line["total_month"] = tmp # json_line["total_month"] - total_award
 	json_log = json.dumps(json_line)
 	fr = open("log.txt", "w")
 	fr.write(json_log)
 	print("today total award", total_award)
+	print("you have earned:" ,json_line["accumulation_month"])
 
 if __name__ == '__main__':
 	if sys.argv[1]=="init":

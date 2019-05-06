@@ -1,1 +1,1 @@
-{"total_month": 2600, "weekly_award": 0, "monthly_award": 0, "daily_award": 0}
+{"monthly_award": 0, "total_month": 2580, "weekly_award": 0, "accumulation_month": 20, "daily_award": 0}
