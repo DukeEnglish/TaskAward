@@ -164,9 +164,9 @@ def main():
 if __name__ == '__main__':
 	if sys.argv[1]=="init":
 		init_log()
-	elif sys.argv[1]=="e"
-		log_excise
-	elif sys.argv[1]=="c"
-		log_coursera
+        elif sys.argv[1]=="e":
+		log_excise()
+        elif sys.argv[1]=="c":
+		log_coursera()
 	else:
 		main()
