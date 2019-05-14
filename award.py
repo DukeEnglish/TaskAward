@@ -35,14 +35,14 @@ TOTAL_MONTH = 2600
 def excise_award():
 	ea = extra_daily_award()
 	print("extra_daily_award", ea)
-	print("d_award", WORK_OUT) 
+	print("excise_d_award", WORK_OUT) 
 	res = WORK_OUT+ea
 	return res
 
 def coursera_award():
 	ea = extra_daily_award()
 	print("extra_daily_award", ea)
-	print("d_award", COURSERA) 
+	print("coursera_award", COURSERA) 
 	res = COURSERA+ea
 	return res
 
@@ -50,6 +50,8 @@ def coursera_award():
 def extra_daily_award():
 	n = random.randint(1,20)
 	print("random_sm_prob_num", n)
+	#if True:
+	#	extra_award = 20
 	if n == 10:
 		extra_award = random.randint(MINUS_DAILY_AWARD, (100 if EXTRA_DAILY_AWARD >= 100 else EXTRA_DAILY_AWARD))
 		print("TODAY'S EXTRA_DAILY_AWARD:", extra_award)
@@ -99,6 +101,7 @@ def log_excise():
 	ea = excise_award()
 	json_line["total_month"] -= ea
 	json_line["accumulation_month"] += ea
+        json_line['excise_month'] += ea
 	print("you have earned:" ,json_line["accumulation_month"])
 	print("excise done")
 	json_log = json.dumps(json_line)
@@ -113,6 +116,7 @@ def log_coursera():
 	ca = coursera_award()
 	json_line["total_month"] -= ca
 	json_line["accumulation_month"] += ea
+        json_line['coursera_month'] +=ca
 	print("you have earned:" ,json_line["accumulation_month"])
 	print("coursera done")
 	json_log = json.dumps(json_line)

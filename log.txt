@@ -1,1 +1,1 @@
-{"monthly_award": 0, "total_month": 2580, "weekly_award": 0, "accumulation_month": 20, "daily_award": 0}
+{"excise_month": 83, "total_month": 2421, "monthly_award": 0, "daily_award": 60, "coursera_month": 0, "weekly_award": 0, "accumulation_month": 179}
